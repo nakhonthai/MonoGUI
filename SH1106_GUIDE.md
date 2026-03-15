@@ -172,13 +172,30 @@ SDA        D21/SDA (ESP32) or A4/UNO
 
 ### Library Conflicts
 
-If you have both SSD1306 and SH1106 libraries installed, use only one in your code:
+**重要：避免重复包含库头文件**
+
+如果你同时安装了 SSD1306 和 SH1106 库，确保：
 
 ```cpp
-// Choose ONE:
-#include <Adafruit_SSD1306.h>  // OR
-#include <Adafruit_SH1106.h>   // NOT BOTH
+// ✅ 正确：只包含一个库
+#include <Adafruit_SH1106.h>   // 选择这一个
+#include <MonoGUI.h>
+
+// ❌ 错误：不要同时包含两个库
+#include <Adafruit_SSD1306.h>
+#include <Adafruit_SH1106.h>
+#include <MonoGUI.h>  // 会导致冲突！
 ```
+
+**常见错误：**
+```
+error: redefinition of 'class Adafruit_SH1106'
+```
+
+**解决方法：**
+1. 在你的代码中只包含一个显示库
+2. 确保在包含 MonoGUI.h **之前** 包含显示库
+3. 不要让 MonoGUI.h 自动包含显示库（它现在不会这样做了）
 
 ## Performance Notes
 
@@ -194,7 +211,7 @@ See `examples/SH1106_Widgets/` for a complete working example with all widget ty
 
 ### 之前的问题：
 ```cpp
-// ❌ 这会产生错误：cannot convert 'Adafruit_SH1106' to 'Adafruit_SSD1306&'
+// ❌ 错误：cannot convert 'Adafruit_SH1106' to 'Adafruit_SSD1306&'
 Adafruit_SH1106 display(-1);
 MyTextBox txt(0, 20, 15, 0);
 txt.TextBoxShow(display);  // 错误！
@@ -216,15 +233,34 @@ txt.TextBoxShow(display);  // 正常工作！
 - `topBar(Adafruit_GFX &display, int ws)`
 - `drawQrCode(Adafruit_GFX &display, ...)`
 
+## ⚠️ 重要：正确的包含顺序
+
+**必须在 MonoGUI.h 之前包含显示库头文件！**
+
+```cpp
+// ✅ 正确的顺序：
+#include <Adafruit_SH1106.h>  // 或 <Adafruit_SSD1306.h>
+#include <MonoGUI.h>
+
+// ❌ 错误的顺序（会导致编译错误）：
+#include <MonoGUI.h>
+#include <Adafruit_SH1106.h>  // 太晚了！
+```
+
 ## 📋 从 SSD1306 迁移到 SH1106
 
-1. 在包含 MonoGUI **之前** 定义 `USE_SH1106`：
+1. **更改包含的头文件**（在 MonoGUI.h 之前）：
    ```cpp
-   #define USE_SH1106
+   // 从：
+   #include <Adafruit_SSD1306.h>
+   #include <MonoGUI.h>
+
+   // 到：
+   #include <Adafruit_SH1106.h>
    #include <MonoGUI.h>
    ```
 
-2. 更改显示屏初始化：
+2. **更改显示屏初始化**：
    ```cpp
    // 从：
    Adafruit_SSD1306 display(128, 64, &Wire, -1);

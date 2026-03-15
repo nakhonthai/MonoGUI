@@ -4,10 +4,9 @@
  * This example demonstrates how to use MonoGUI with SH1106 OLED display
  * instead of SSD1306. The SH1106 is compatible but requires different
  * initialization.
+ *
+ * IMPORTANT: Include display library header BEFORE MonoGUI.h
  */
-
-// Define USE_SH1106 before including MonoGUI to use SH1106 display
-#define USE_SH1106
 
 #include <Wire.h>
 #include <Adafruit_GFX.h>

@@ -20,12 +20,11 @@
 #include <Arduino.h>
 #include <Adafruit_GFX.h>
 
-// Support both SSD1306 and SH1106 displays
-#if defined(USE_SH1106)
-  #include <Adafruit_SH1106.h>
-#else
-  #include <Adafruit_SSD1306.h>
-#endif
+// Note: MonoGUI now works with Adafruit_GFX base class
+// Users must include their preferred display library BEFORE MonoGUI.h:
+//   #include <Adafruit_SSD1306.h>  // For SSD1306
+//   #include <Adafruit_SH1106.h>   // For SH1106 (any variant)
+//   #include <MonoGUI.h>
 
 // Screen dimensions
 #define SCREEN_WIDTH 128

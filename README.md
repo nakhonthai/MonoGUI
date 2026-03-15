@@ -35,11 +35,13 @@ Or copy the `MonoGUI` folder to your Arduino `libraries` folder.
 
 ## Quick Start
 
+**重要：必须在 MonoGUI.h 之前包含显示库头文件**
+
 ```cpp
 #include <Wire.h>
 #include <Adafruit_GFX.h>
-#include <Adafruit_SSD1306.h>
-#include <MonoGUI.h>
+#include <Adafruit_SSD1306.h>  // 或 <Adafruit_SH1106.h>
+#include <MonoGUI.h>            // 必须在显示库之后
 
 #define SCREEN_WIDTH 128
 #define SCREEN_HEIGHT 64
@@ -131,20 +133,29 @@ See the `examples/` folder for complete example sketches:
 MonoGUI widgets are now **fully compatible** with both SSD1306 and SH1106 displays:
 
 ```cpp
-// For SH1106 - define before including MonoGUI
-#define USE_SH1106
+// For SSD1306
+#include <Adafruit_SSD1306.h>
+#include <MonoGUI.h>
+
+Adafruit_SSD1306 display(128, 64, &Wire, -1);
+display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
+
+// For SH1106 (any variant: Adafruit_SH1106, Adafruit_ESP32_SH1106, etc.)
+#include <Adafruit_SH1106.h>   // MUST be before MonoGUI.h
 #include <MonoGUI.h>
 
 Adafruit_SH1106 display(-1);
 display.begin(SH1106_I2C_ADDRESS, -1);
 
-// All widgets work the same way!
+// All widgets work the same way with both displays!
 MyTextBox txt(0, 20, 15, 0);
 txt.setText("Hello!");
 txt.TextBoxShow(display);  // Works with both displays!
 ```
 
-See [SH1106_GUIDE.md](SH1106_GUIDE.md) for detailed migration instructions.
+**⚠️ Important: Always include your display library header BEFORE MonoGUI.h**
+
+See [SH1106_GUIDE.md](SH1106_GUIDE.md) for detailed migration instructions and troubleshooting.
 
 ## License
 
@@ -154,3 +165,17 @@ Original project: https://github.com/nakhonthai/ESP32APRS_T-TWR
 ## Contributing
 
 Contributions are welcome! Please feel free to submit pull requests.
+
+## Troubleshooting
+
+Having issues? Check the [TROUBLESHOOTING.md](TROUBLESHOOTING.md) guide for solutions to common problems:
+
+- Compilation errors
+- Display not working
+- Library conflicts
+- Platform-specific issues
+
+## License
+
+This library is extracted from the ESP32APRS_T-TWR project.
+Original project: https://github.com/nakhonthai/ESP32APRS_T-TWR

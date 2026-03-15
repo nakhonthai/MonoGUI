@@ -25,10 +25,12 @@
 #include <Adafruit_GFX.h>
 
 #ifdef USE_SH1106
+  // IMPORTANT: Include display library BEFORE MonoGUI.h
   #include <Adafruit_SH1106.h>
   #define DISPLAY_TYPE "SH1106"
   Adafruit_SH1106 display(-1);
 #else
+  // IMPORTANT: Include display library BEFORE MonoGUI.h
   #include <Adafruit_SSD1306.h>
   #define DISPLAY_TYPE "SSD1306"
   #define SCREEN_WIDTH 128
@@ -36,6 +38,7 @@
   Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
 #endif
 
+// Include MonoGUI AFTER your display library
 #include <MonoGUI.h>
 
 // ========================================================================
