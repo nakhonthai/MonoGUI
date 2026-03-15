@@ -15,11 +15,12 @@ Arduino GUI library for monochrome OLED displays (SSD1306 128x64 pixels).
 
 - Adafruit GFX Library
 - Adafruit SSD1306 Library
+- Adafruit SH1106 Library (alternative to SSD1306)
 
 ## Hardware
 
 - ESP32 or Arduino microcontroller
-- SSD1306 OLED display (128x64 pixels)
+- SSD1306 or SH1106 OLED display (128x64 pixels)
 - Input device (rotary encoder, buttons, or serial)
 
 ## Installation
@@ -117,9 +118,10 @@ sym.Show(display);
 
 See the `examples/` folder for complete example sketches:
 
-- **BasicWidgets**: Demonstrates all widget types
-- **MenuSystem**: Simple menu navigation
+- **BasicWidgets**: Demonstrates all widget types (SSD1306)
+- **InteractiveMenu**: Simple menu navigation
 - **TextInput**: Text input with virtual keyboard
+- **SH1106_Widgets**: Using MonoGUI with SH1106 display
 
 ## License
 

@@ -25,6 +25,11 @@
       "owner": "adafruit",
       "name": "Adafruit SSD1306",
       "version": "^2.5.7"
+    },
+    {
+      "owner": "adafruit",
+      "name": "Adafruit SH1106",
+      "version": "^2.1.0"
     }
   ],
   "build": {
