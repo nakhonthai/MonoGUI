@@ -8,7 +8,6 @@
 
 #include <Arduino.h>
 #include <Adafruit_GFX.h>
-#include <Adafruit_SSD1306.h>
 
 class MyButtonBox {
 public:
@@ -36,7 +35,7 @@ public:
      * Display the button on screen
      * @param display Reference to OLED display object
      */
-    void Show(Adafruit_SSD1306 &display);
+    void Show(Adafruit_GFX &display);
 
     /**
      * Set button state

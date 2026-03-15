@@ -1,6 +1,8 @@
 # MonoGUI Library
 
-Arduino GUI library for monochrome OLED displays (SSD1306 128x64 pixels).
+Arduino GUI library for monochrome OLED displays (SSD1306 & SH1106 128x64 pixels).
+
+**✨ Now with full support for both SSD1306 and SH1106 displays!**
 
 ## Features
 
@@ -122,6 +124,27 @@ See the `examples/` folder for complete example sketches:
 - **InteractiveMenu**: Simple menu navigation
 - **TextInput**: Text input with virtual keyboard
 - **SH1106_Widgets**: Using MonoGUI with SH1106 display
+- **DisplayCompatibilityTest**: Test both SSD1306 and SH1106 displays
+
+## Display Compatibility
+
+MonoGUI widgets are now **fully compatible** with both SSD1306 and SH1106 displays:
+
+```cpp
+// For SH1106 - define before including MonoGUI
+#define USE_SH1106
+#include <MonoGUI.h>
+
+Adafruit_SH1106 display(-1);
+display.begin(SH1106_I2C_ADDRESS, -1);
+
+// All widgets work the same way!
+MyTextBox txt(0, 20, 15, 0);
+txt.setText("Hello!");
+txt.TextBoxShow(display);  // Works with both displays!
+```
+
+See [SH1106_GUIDE.md](SH1106_GUIDE.md) for detailed migration instructions.
 
 ## License
 

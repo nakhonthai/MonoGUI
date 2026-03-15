@@ -2,7 +2,13 @@
 
 ## Overview
 
-MonoGUI now supports both SSD1306 and SH1106 OLED displays. The SH1106 is a compatible alternative to SSD1306 with similar specifications but different initialization.
+✅ **MonoGUI 现在完全兼容 SSD1306 和 SH1106 显示屏！**
+
+所有 widget 函数现在使用 `Adafruit_GFX&` 基类，这意味着：
+- 可以使用 SSD1306 显示屏
+- 可以使用 SH1106 显示屏
+- 无需修改 widget 代码
+- 完全向后兼容
 
 ## Key Differences
 
@@ -34,9 +40,11 @@ lib_deps =
 
 ## Code Example
 
-### Using SH1106
+### ✅ 使用 SH1106（推荐新方法）
 
 ```cpp
+#define USE_SH1106  // 在包含 MonoGUI 之前定义
+
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SH1106.h>
@@ -50,7 +58,7 @@ void setup() {
   display.begin(SH1106_I2C_ADDRESS, OLED_RESET);
   display.clearDisplay();
 
-  // Use MonoGUI widgets
+  // 使用 MonoGUI widgets - 完全相同的代码！
   MyTextBox txt(0, 20, 15, 0);
   txt.setText("Hello SH1106");
   txt.TextBoxShow(display);
@@ -59,11 +67,11 @@ void setup() {
 }
 
 void loop() {
-  // Your code here
+  // 你的代码
 }
 ```
 
-### Using SSD1306 (Original)
+### ✅ 使用 SSD1306（原始方法）
 
 ```cpp
 #include <Wire.h>
@@ -82,7 +90,7 @@ void setup() {
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
   display.clearDisplay();
 
-  // Use MonoGUI widgets
+  // 使用 MonoGUI widgets - 完全相同的代码！
   MyTextBox txt(0, 20, 15, 0);
   txt.setText("Hello SSD1306");
   txt.TextBoxShow(display);
@@ -91,7 +99,7 @@ void setup() {
 }
 
 void loop() {
-  // Your code here
+  // 你的代码
 }
 ```
 
@@ -182,20 +190,52 @@ If you have both SSD1306 and SH1106 libraries installed, use only one in your co
 
 See `examples/SH1106_Widgets/` for a complete working example with all widget types.
 
-## Migration from SSD1306 to SH1106
+## 🔧 关键改进
 
-1. Replace `#include <Adafruit_SSD1306.h>` with `#include <Adafruit_SH1106.h>`
-2. Update display initialization:
+### 之前的问题：
+```cpp
+// ❌ 这会产生错误：cannot convert 'Adafruit_SH1106' to 'Adafruit_SSD1306&'
+Adafruit_SH1106 display(-1);
+MyTextBox txt(0, 20, 15, 0);
+txt.TextBoxShow(display);  // 错误！
+```
+
+### 现在的解决方案：
+```cpp
+// ✅ 现在可以正常工作！
+Adafruit_SH1106 display(-1);
+MyTextBox txt(0, 20, 15, 0);
+txt.TextBoxShow(display);  // 正常工作！
+```
+
+所有 widget 函数现在都使用 `Adafruit_GFX&` 基类引用：
+- `TextBoxShow(Adafruit_GFX &display)`
+- `CheckBoxShow(Adafruit_GFX &display)`
+- `Show(Adafruit_GFX &display)` (ButtonBox, ComboBox, SymbolBox)
+- `msgBox(Adafruit_GFX &display, String msg)`
+- `topBar(Adafruit_GFX &display, int ws)`
+- `drawQrCode(Adafruit_GFX &display, ...)`
+
+## 📋 从 SSD1306 迁移到 SH1106
+
+1. 在包含 MonoGUI **之前** 定义 `USE_SH1106`：
    ```cpp
-   // From:
+   #define USE_SH1106
+   #include <MonoGUI.h>
+   ```
+
+2. 更改显示屏初始化：
+   ```cpp
+   // 从：
    Adafruit_SSD1306 display(128, 64, &Wire, -1);
    display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
 
-   // To:
+   // 到：
    Adafruit_SH1106 display(-1);
    display.begin(SH1106_I2C_ADDRESS, -1);
    ```
-3. No changes needed for MonoGUI widget code!
+
+3. **无需修改 MonoGUI widget 代码！** 🎉
 
 For more information, visit:
 - Adafruit SH1106 Library: https://github.com/adafruit/Adafruit-SH1106-library

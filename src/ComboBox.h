@@ -8,7 +8,6 @@
 
 #include <Arduino.h>
 #include <Adafruit_GFX.h>
-#include <Adafruit_SSD1306.h>
 
 class MyComboBox {
 public:
@@ -47,7 +46,7 @@ public:
      * Display the combobox on screen
      * @param display Reference to OLED display object
      */
-    void Show(Adafruit_SSD1306 &display);
+    void Show(Adafruit_GFX &display);
 
     /**
      * Set current value

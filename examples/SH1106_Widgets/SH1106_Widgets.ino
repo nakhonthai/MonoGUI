@@ -6,6 +6,9 @@
  * initialization.
  */
 
+// Define USE_SH1106 before including MonoGUI to use SH1106 display
+#define USE_SH1106
+
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SH1106.h>
@@ -39,10 +42,7 @@ void setup() {
 
   // Initialize SH1106 display
   // SH1106 typically uses I2C address 0x3C
-  if(!display.begin(SH1106_I2C_ADDRESS, OLED_RESET)) {
-    Serial.println("SH1106 allocation failed");
-    for(;;); // Don't proceed, loop forever
-  }
+  display.begin(SH1106_I2C_ADDRESS, OLED_RESET);
 
   // Clear the buffer
   display.clearDisplay();

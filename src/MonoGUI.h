@@ -19,7 +19,13 @@
 
 #include <Arduino.h>
 #include <Adafruit_GFX.h>
-#include <Adafruit_SSD1306.h>
+
+// Support both SSD1306 and SH1106 displays
+#if defined(USE_SH1106)
+  #include <Adafruit_SH1106.h>
+#else
+  #include <Adafruit_SSD1306.h>
+#endif
 
 // Screen dimensions
 #define SCREEN_WIDTH 128
@@ -39,9 +45,9 @@ class MySymbolBox;
 #include "ComboBox.h"
 #include "SymbolBox.h"
 
-// Utility functions
-void msgBox(Adafruit_SSD1306 &display, String msg);
-void topBar(Adafruit_SSD1306 &display, int ws);
-void drawQrCode(Adafruit_SSD1306 &display, const char *text, int x, int y, int scale);
+// Utility functions - Use Adafruit_GFX base class for display compatibility
+void msgBox(Adafruit_GFX &display, String msg);
+void topBar(Adafruit_GFX &display, int ws);
+void drawQrCode(Adafruit_GFX &display, const char *text, int x, int y, int scale);
 
 #endif // MONOGUI_H

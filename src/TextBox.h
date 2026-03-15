@@ -8,7 +8,6 @@
 
 #include <Arduino.h>
 #include <Adafruit_GFX.h>
-#include <Adafruit_SSD1306.h>
 
 class MyTextBox {
 public:
@@ -36,7 +35,7 @@ public:
      * Display the textbox on screen
      * @param display Reference to OLED display object
      */
-    void TextBoxShow(Adafruit_SSD1306 &display);
+    void TextBoxShow(Adafruit_GFX &display);
 
     /**
      * Set text value

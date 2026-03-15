@@ -23,7 +23,7 @@ void MyTextBox::TextBox(const char *defaultText) {
     text[sizeof(text) - 1] = '\0';
 }
 
-void MyTextBox::TextBoxShow(Adafruit_SSD1306 &display) {
+void MyTextBox::TextBoxShow(Adafruit_GFX &display) {
     display.setTextColor(WHITE);
     display.setCursor(x, y);
 
@@ -95,7 +95,7 @@ void MyCheckBox::Toggle() {
     Checked = !Checked;
 }
 
-void MyCheckBox::CheckBoxShow(Adafruit_SSD1306 &display) {
+void MyCheckBox::CheckBoxShow(Adafruit_GFX &display) {
     display.setTextColor(WHITE);
 
     // Draw checkbox
@@ -141,7 +141,7 @@ void MyButtonBox::Toggle() {
     Checked = !Checked;
 }
 
-void MyButtonBox::Show(Adafruit_SSD1306 &display) {
+void MyButtonBox::Show(Adafruit_GFX &display) {
     int textWidth = strlen(text) * 6;
     int boxWidth = textWidth + 8;
 
@@ -200,7 +200,7 @@ void MyComboBox::SelectItem(const char* items[], int count) {
     }
 }
 
-void MyComboBox::Show(Adafruit_SSD1306 &display) {
+void MyComboBox::Show(Adafruit_GFX &display) {
     display.setTextColor(WHITE);
     display.setCursor(x, y);
 
@@ -275,7 +275,7 @@ void MySymbolBox::SelectItem(const char* symbols, int count) {
     // Selection handled externally via increment/decrement
 }
 
-void MySymbolBox::Show(Adafruit_SSD1306 &display) {
+void MySymbolBox::Show(Adafruit_GFX &display) {
     display.setTextColor(WHITE);
     display.setCursor(x, y);
 
@@ -311,7 +311,7 @@ void MySymbolBox::decrement() {
 // UTILITY FUNCTIONS
 // ========================================================================
 
-void msgBox(Adafruit_SSD1306 &display, String msg) {
+void msgBox(Adafruit_GFX &display, String msg) {
     display.clearDisplay();
     display.setTextSize(1);
     display.setTextColor(WHITE);
@@ -340,7 +340,7 @@ void msgBox(Adafruit_SSD1306 &display, String msg) {
     delay(2000);
 }
 
-void topBar(Adafruit_SSD1306 &display, int ws) {
+void topBar(Adafruit_GFX &display, int ws) {
     display.fillRect(0, 0, SCREEN_WIDTH, 10, WHITE);
     display.setTextColor(BLACK);
     display.setCursor(2, 1);
@@ -355,7 +355,7 @@ void topBar(Adafruit_SSD1306 &display, int ws) {
     display.setTextColor(WHITE);
 }
 
-void drawQrCode(Adafruit_SSD1306 &display, const char *text, int x, int y, int scale) {
+void drawQrCode(Adafruit_GFX &display, const char *text, int x, int y, int scale) {
     // Simplified QR code placeholder
     // For full QR code generation, integrate a QR code library
     display.drawRect(x, y, 30 * scale, 30 * scale, WHITE);
